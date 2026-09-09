@@ -1,4 +1,4 @@
-from storage import FileStorage
+from .storage import FileStorage
 from typing import Optional
 
 class TracerClient:

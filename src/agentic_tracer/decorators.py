@@ -1,7 +1,7 @@
 from functools import wraps
 import time
 from typing import Callable
-from client import TracerClient
+from .client import TracerClient
 
 def trace(client: TracerClient):
     """Decorator factory wraps an async function to record it as trace.
@@ -24,9 +24,16 @@ def trace(client: TracerClient):
             trace_id = client.start_trace(input_text)
             start_time = time.time()
 
+            # create a step adder
+            async def add_step(
+                    step_type: str,
+                    content: dict
+            ):
+                client.add_step(trace_id, step_type, content)
+
             try:
                 # execute the agent with trace context
-                result = await func(*args, **kwargs)
+                result = await func(*args, **kwargs, _trace_add_step=add_step)
 
                 latency_ms = int((time.time() - start_time) * 1000)
                 client.complete_trace(

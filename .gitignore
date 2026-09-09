@@ -1,4 +1,5 @@
 .venv/
 help.md
 agentic_tracer.egg-info
-__pychache__/
+__pycache__/
+*.json
