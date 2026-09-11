@@ -56,7 +56,7 @@ class TracerClient:
             latency_ms: Time taken to execute the step, in milliseconds. Defaults to 0.
         """
         if self.mode == "file":
-            self.storage.add_step(step_type, content, latency_ms)
+            self.storage.add_step(trace_id, step_type, content, latency_ms)
 
     def complete_trace(
             self,
@@ -75,5 +75,5 @@ class TracerClient:
             The completed trace dict in file mode, else None.
         """
         if self.mode == "file":
-            return self.storage.complete_trace(final_output, success)
+            return self.storage.complete_trace(trace_id, final_output, success)
         

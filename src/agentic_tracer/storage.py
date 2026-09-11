@@ -45,6 +45,7 @@ class FileStorage:
 
     def add_step(
             self,
+            trace_id: int,
             step_type: str,
             content: dict,
             latency_ms: int = 0
@@ -64,6 +65,7 @@ class FileStorage:
             raise RuntimeError("No active trace.")
         
         self._current_trace["steps"].append({
+            "trace_id": trace_id,
             "step_type": step_type,
             "content": content,
             "latency_ms": latency_ms
@@ -71,6 +73,7 @@ class FileStorage:
 
     def complete_trace(
             self,
+            trace_id: int,
             final_output: str,
             success: bool = True
     ) -> dict:
